@@ -1,17 +1,25 @@
 const socket = io();
+
+const usernameInput = document.getElementById('username');
 const input = document.getElementById('m');
 const messages = document.getElementById('messages');
 
 function sendMessage() {
-  const message = input.value;
-  if (message.trim() !== '') {
-    socket.emit('chat message', message);
+  const username = usernameInput.value.trim();
+  const text = input.value.trim();
+
+  if (username && text) {
+    socket.emit('chat message', {
+      user: username,
+      text: text
+    });
     input.value = '';
   }
 }
 
-socket.on('chat message', (msg) => {
+socket.on('chat message', (data) => {
   const item = document.createElement('li');
-  item.textContent = msg;
+  item.textContent = `[${data.user}]: ${data.text}`;
   messages.appendChild(item);
 });
+

@@ -8,8 +8,10 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  socket.on('chat message', (data) => {
+    io.emit('chat message', {
+      user: data.user,
+      text: data.text});
   });
 
   socket.on('disconnect', () => {
