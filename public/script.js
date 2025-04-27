@@ -16,6 +16,12 @@ function sendMessage() {
     input.value = '';
   }
 }
+function addEmoji(emoji) {
+  const input = document.getElementById('m');
+  input.value += emoji;
+  input.focus();
+}
+
 
 socket.on('chat message', (data) => {
   const item = document.createElement('li');
